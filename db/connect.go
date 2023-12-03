@@ -29,34 +29,33 @@ func Connect() {
 }
 
 func CreateTables() {
-	SQLquery := `CREATE TABLE IF NOT EXISTS orders ( 
+	SQLquery := `CREATE TABLE IF NOT EXISTS orders (
 		i INT PRIMARY KEY AUTO_INCREMENT,
-
-		order_id INT NOT NULL, 
+ 
 		order_name VARCHAR(80) NOT NULL,
 		order_status MEDIUMINT NOT NULL,
-		order_is_paid BOOLEAN,
-		is_safe_transaction BOOLEAN,
+		order_is_paid BOOLEAN DEFAULT FALSE,
+		is_safe_transaction BOOLEAN DEFAULT FALSE,
 
 		status MEDIUMINT NOT NULL,
-		performer VARCHAR(80),
+		performer VARCHAR(80) NOT NULL,
 
-		viewer_id INT, group_id INT, first_name VARCHAR(80), last_name VARCHAR(80), photo_100 VARCHAR(200), viewer_type VARCHAR(16), rights SMALLINT,
+		viewer_id INT NOT NULL, group_id INT NOT NULL, first_name VARCHAR(80) NOT NULL, last_name VARCHAR(80) NOT NULL, photo_100 VARCHAR(200) NOT NULL, viewer_type VARCHAR(16) NOT NULL, rights SMALLINT NOT NULL,
 
-		date_time DATETIME, date_time_taken DATETIME, date_time_deadline DATETIME,
+		date_time DATETIME NOT NULL, date_time_taken DATETIME NOT NULL, date_time_deadline DATETIME NOT NULL,
 
-		text MEDIUMTEXT NOT NULL, text_length MEDIUMINT, text_type MEDIUMINT,
-		text_translated MEDIUMTEXT NOT NULL, text_translated_length MEDIUMINT, text_translated_readiness VARCHAR(80), text_translated_demo TEXT,
+		text MEDIUMTEXT NOT NULL, text_length MEDIUMINT NOT NULL, text_type MEDIUMINT NOT NULL,
+		text_translated MEDIUMTEXT NOT NULL, text_translated_length MEDIUMINT NOT NULL, text_translated_readiness VARCHAR(80) NOT NULL, text_translated_demo TEXT NOT NULL,
 
 		description TEXT NOT NULL,
-		timezone SMALLINT, creating INT 
+		timezone SMALLINT NOT NULL, creating BIGINT NOT NULL
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		
 	CREATE TABLE IF NOT EXISTS order_statuses (
 		i INT PRIMARY KEY AUTO_INCREMENT,
-		status_id MEDIUMINT,
-		name VARCHAR(32),
-		value VARCHAR(32)
+		status_id MEDIUMINT NOT NULL,
+		name VARCHAR(32) NOT NULL,
+		value VARCHAR(32) NOT NULL
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;`
 
 	_, err := Connection.Exec(SQLquery)
